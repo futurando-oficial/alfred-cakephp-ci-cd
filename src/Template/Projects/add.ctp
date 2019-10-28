@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Project $project
@@ -15,14 +16,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <?= $this->Form->create($project) ?>
-                         <?php
-                                                                    echo $this->Form->control('name');
-                                        echo $this->Form->control('source');
-                                        echo $this->Form->control('status');
-                                        echo $this->Form->control('last_update', ['empty' => true]);
-                                        echo $this->Form->control('users._ids', ['options' => $users]);
-                                                    ?>
+                        <?= $this->Form->create($project, ['templates' => 'painel_formtemplate']) ?>
+                        <?php
+                        echo $this->Form->control('name');
+                        echo $this->Form->control('source',['options'=>['Github','Bitbucket','Gitlab']]);
+                        ?>
                         <?= $this->Form->button(__('Submit')) ?>
                         <?= $this->Form->end() ?>
                     </div>

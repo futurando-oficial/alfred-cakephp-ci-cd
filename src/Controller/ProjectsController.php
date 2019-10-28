@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -19,7 +20,10 @@ class ProjectsController extends AppController
      */
     public function index()
     {
-        $projects = $this->paginate($this->Projects);
+        $this->loadModel('ProjectsUsers');
+        $projectsuser =  $this->ProjectsUsers->find('list')->where(['user_id'=>$this->Auth->user('id')])->toArray();
+       
+        $projects = $this->paginate( $this->Projects->find()->where(['id IN'=>$projectsuser]));
 
         $this->set(compact('projects'));
     }
@@ -49,12 +53,19 @@ class ProjectsController extends AppController
     {
         $project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
-            $project = $this->Projects->patchEntity($project, $this->request->getData());
+            $post = $this->request->getData();
+            $post['users']['_ids'][] = $this->Auth->user('id');
+            $project = $this->Projects->patchEntity($project, $post);
+            $project->status = 1;
+            $project->last_update = new \DateTime();
+
             if ($this->Projects->save($project)) {
                 $this->Flash->success(__('The project has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
+
+
             $this->Flash->error(__('The project could not be saved. Please, try again.'));
         }
         $users = $this->Projects->Users->find('list', ['limit' => 200]);
