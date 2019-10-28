@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Authentications Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\ServicesTable&\Cake\ORM\Association\BelongsTo $Services
  *
  * @method \App\Model\Entity\Authentication get($primaryKey, $options = [])
  * @method \App\Model\Entity\Authentication newEntity($data = null, array $options = [])
@@ -44,6 +45,10 @@ class AuthenticationsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Services', [
+            'foreignKey' => 'service_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -57,11 +62,6 @@ class AuthenticationsTable extends Table
         $validator
             ->uuid('id')
             ->allowEmptyString('id', null, 'create');
-
-        $validator
-            ->integer('service')
-            ->requirePresence('service', 'create')
-            ->notEmptyString('service');
 
         $validator
             ->scalar('token')
@@ -91,6 +91,7 @@ class AuthenticationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['service_id'], 'Services'));
 
         return $rules;
     }

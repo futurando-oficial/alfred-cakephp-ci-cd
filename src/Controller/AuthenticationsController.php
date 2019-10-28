@@ -20,7 +20,7 @@ class AuthenticationsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Users', 'Services']
         ];
         $authentications = $this->paginate($this->Authentications);
 
@@ -37,7 +37,7 @@ class AuthenticationsController extends AppController
     public function view($id = null)
     {
         $authentication = $this->Authentications->get($id, [
-            'contain' => ['Users']
+            'contain' => ['Users', 'Services']
         ]);
 
         $this->set('authentication', $authentication);
@@ -60,8 +60,8 @@ class AuthenticationsController extends AppController
             }
             $this->Flash->error(__('The authentication could not be saved. Please, try again.'));
         }
-        $users = $this->Authentications->Users->find('list', ['limit' => 200]);
-        $this->set(compact('authentication', 'users'));
+        $services = $this->Authentications->Services->find(null, ['limit' => 200]);
+        $this->set(compact('authentication', 'users', 'services'));
     }
 
     /**
@@ -86,7 +86,8 @@ class AuthenticationsController extends AppController
             $this->Flash->error(__('The authentication could not be saved. Please, try again.'));
         }
         $users = $this->Authentications->Users->find('list', ['limit' => 200]);
-        $this->set(compact('authentication', 'users'));
+        $services = $this->Authentications->Services->find('list', ['limit' => 200]);
+        $this->set(compact('authentication', 'users', 'services'));
     }
 
     /**

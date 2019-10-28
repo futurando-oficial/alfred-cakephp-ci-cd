@@ -4,21 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Authentication Entity
+ * Service Entity
  *
  * @property string $id
- * @property string $user_id
- * @property string $service_id
- * @property string $token
- * @property \Cake\I18n\FrozenTime|null $expiration
+ * @property string $module
+ * @property string $name
+ * @property string $logo
  * @property int $status
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Service $service
+ * @property \App\Model\Entity\Authentication[] $authentications
  */
-class Authentication extends Entity
+class Service extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -30,23 +28,12 @@ class Authentication extends Entity
      * @var array
      */
     protected $_accessible = [
-        'user_id' => true,
-        'service_id' => true,
-        'token' => true,
-        'expiration' => true,
+        'module' => true,
+        'name' => true,
+        'logo' => true,
         'status' => true,
         'created' => true,
         'modified' => true,
-        'user' => true,
-        'service' => true
-    ];
-
-    /**
-     * Fields that are excluded from JSON versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [
-        'token'
+        'authentications' => true
     ];
 }

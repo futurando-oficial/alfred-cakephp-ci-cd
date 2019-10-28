@@ -16,6 +16,8 @@
         <li><?= $this->Html->link(__('List Authentications'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Services'), ['controller' => 'Services', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Service'), ['controller' => 'Services', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="authentications form large-9 medium-8 columns content">
@@ -24,7 +26,7 @@
         <legend><?= __('Edit Authentication') ?></legend>
         <?php
             echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('service');
+            echo $this->Form->control('service_id', ['options' => $services]);
             echo $this->Form->control('token');
             echo $this->Form->control('expiration', ['empty' => true]);
             echo $this->Form->control('status');

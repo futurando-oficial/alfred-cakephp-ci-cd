@@ -13,6 +13,8 @@
         <li><?= $this->Html->link(__('New Authentication'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Services'), ['controller' => 'Services', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Service'), ['controller' => 'Services', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="authentications view large-9 medium-8 columns content">
@@ -27,12 +29,12 @@
             <td><?= $authentication->has('user') ? $this->Html->link($authentication->user->name, ['controller' => 'Users', 'action' => 'view', $authentication->user->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Token') ?></th>
-            <td><?= h($authentication->token) ?></td>
+            <th scope="row"><?= __('Service') ?></th>
+            <td><?= $authentication->has('service') ? $this->Html->link($authentication->service->name, ['controller' => 'Services', 'action' => 'view', $authentication->service->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Service') ?></th>
-            <td><?= $this->Number->format($authentication->service) ?></td>
+            <th scope="row"><?= __('Token') ?></th>
+            <td><?= h($authentication->token) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Status') ?></th>

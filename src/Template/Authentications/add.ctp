@@ -1,29 +1,13 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Authentication $authentication
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Authentications'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="authentications form large-9 medium-8 columns content">
-    <?= $this->Form->create($authentication) ?>
-    <fieldset>
-        <legend><?= __('Add Authentication') ?></legend>
-        <?php
-            echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('service');
-            echo $this->Form->control('token');
-            echo $this->Form->control('expiration', ['empty' => true]);
-            echo $this->Form->control('status');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="row justify-content-center">
+    <?php foreach ($services as $service): ?>
+        <div class="col-md-2">
+            <div class="card text-center" >
+                <?= $this->Html->image('services/' . $service->logo, ['class' => 'card-img-top']) ?>
+                <div class="card-body">
+                    <p class="card-text">Conect your <?= $service->name ?> account.</p>
+                    <a href="#0" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>

@@ -10,6 +10,8 @@
         <li><?= $this->Html->link(__('New Authentication'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Services'), ['controller' => 'Services', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Service'), ['controller' => 'Services', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="authentications index large-9 medium-8 columns content">
@@ -19,7 +21,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('service') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('service_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('token') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('expiration') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('status') ?></th>
@@ -33,7 +35,7 @@
             <tr>
                 <td><?= h($authentication->id) ?></td>
                 <td><?= $authentication->has('user') ? $this->Html->link($authentication->user->name, ['controller' => 'Users', 'action' => 'view', $authentication->user->id]) : '' ?></td>
-                <td><?= $this->Number->format($authentication->service) ?></td>
+                <td><?= $authentication->has('service') ? $this->Html->link($authentication->service->name, ['controller' => 'Services', 'action' => 'view', $authentication->service->id]) : '' ?></td>
                 <td><?= h($authentication->token) ?></td>
                 <td><?= h($authentication->expiration) ?></td>
                 <td><?= $this->Number->format($authentication->status) ?></td>
