@@ -18,7 +18,6 @@ return [
      * true: Errors and warnings shown.
      */
     'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
-
     /**
      * Configure basic information about the application.
      *
@@ -67,7 +66,6 @@ return [
             'locales' => [APP . 'Locale' . DS],
         ],
     ],
-
     /**
      * Security and encryption configuration
      *
@@ -78,7 +76,6 @@ return [
     'Security' => [
         'salt' => env('SECURITY_SALT', '__SALT__'),
     ],
-
     /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
@@ -88,10 +85,9 @@ return [
      * enable timestamping regardless of debug value.
      */
     'Asset' => [
-        //'timestamp' => true,
-        // 'cacheTime' => '+1 year'
+    //'timestamp' => true,
+    // 'cacheTime' => '+1 year'
     ],
-
     /**
      * Configure the cache adapters.
      */
@@ -101,7 +97,6 @@ return [
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
         ],
-
         /**
          * Configure the cache used for general framework caching.
          * Translation cache files are stored with this configuration.
@@ -116,7 +111,6 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKECORE_URL', null),
         ],
-
         /**
          * Configure the cache for model and datasource caches. This cache
          * configuration is used to store schema descriptions, and table listings
@@ -131,7 +125,6 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEMODEL_URL', null),
         ],
-
         /**
          * Configure the cache for routes. The cached routes collection is built the
          * first time the routes are processed via `config/routes.php`.
@@ -145,8 +138,15 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEROUTES_URL', null),
         ],
+        'repositories' => [
+            'className' => FileEngine::class,
+            'prefix' => 'repositories_',
+            'path' => CACHE . 'users/',
+            'serialize' => true,
+            'duration' => '+1 day',
+            'url' => env('CACHE_DEFAULT_URL', null),
+        ],
     ],
-
     /**
      * Configure the Error and Exception handlers used by your application.
      *
@@ -183,7 +183,6 @@ return [
         'log' => true,
         'trace' => true,
     ],
-
     /**
      * Email configuration.
      *
@@ -219,7 +218,6 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
-
     /**
      * Email delivery profiles
      *
@@ -233,11 +231,10 @@ return [
         'default' => [
             'transport' => 'default',
             'from' => 'you@localhost',
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
+        //'charset' => 'utf-8',
+        //'headerCharset' => 'utf-8',
         ],
     ],
-
     /**
      * Connection information used by the ORM to connect
      * to your application's datastores.
@@ -274,7 +271,6 @@ return [
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
-
             /**
              * Set identifier quoting to true if you are using reserved words or
              * special characters in your table or column names. Enabling this
@@ -284,7 +280,6 @@ return [
              * manipulated before being executed.
              */
             'quoteIdentifiers' => false,
-
             /**
              * During development, if using MySQL < 5.6, uncommenting the
              * following line could boost the speed at which schema metadata is
@@ -293,10 +288,8 @@ return [
              * which is the recommended value in production environments
              */
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-
             'url' => env('DATABASE_URL', null),
         ],
-
         /**
          * The test connection is used during the test suite.
          */
@@ -318,7 +311,6 @@ return [
             'url' => env('DATABASE_TEST_URL', null),
         ],
     ],
-
     /**
      * Configures logging options
      */
@@ -348,7 +340,6 @@ return [
             'scopes' => ['queriesLog'],
         ],
     ],
-
     /**
      * Session configuration.
      *
@@ -391,4 +382,8 @@ return [
     'Session' => [
         'defaults' => 'php',
     ],
+    'Bitbucket' => [// Aplication Keys
+        'key' => '',
+        'secret' => ''
+    ]
 ];
