@@ -22,14 +22,8 @@
     <div class="wrapper ">
         <?= $this->element('Template/sidebar'); ?>
         <div class="main-panel">
-            <?= $this->element('Template/navbar') ?>
-            <div class="content">
-                <div class="container-fluid">
-                    <?= $this->Flash->render() ?>
-                    <?= $this->fetch('content') ?>
-                </div>
-            </div>
-            <?= $this->element('Template/footer'); ?>
+            <?= $this->Flash->render() ?>
+            <?= $this->fetch('content') ?>
         </div>
     </div>
     <!--   Core JS Files   -->
