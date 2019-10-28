@@ -47,14 +47,14 @@ class AuthenticationsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => '4debdbe0-1db8-4db0-a46d-882dbf3c73cc',
-                'user_id' => '315b081a-8145-4227-b958-254059a413b1',
-                'service_id' => '1b78de2b-95b5-49e3-aef6-20dda49788d6',
+                'id' => '759162ed-4137-498a-8a29-420ed1851a32',
+                'user_id' => '37be270c-c8e2-49c0-a191-f7798cfb62ad',
+                'service_id' => 'd2aea42c-a077-40b0-a101-c6e2877f95d5',
                 'token' => 'Lorem ipsum dolor sit amet',
-                'expiration' => '2019-10-28 02:36:47',
+                'expiration' => '2019-10-28 02:52:28',
                 'status' => 1,
-                'created' => '2019-10-28 02:36:47',
-                'modified' => '2019-10-28 02:36:47'
+                'created' => '2019-10-28 02:52:28',
+                'modified' => '2019-10-28 02:52:28'
             ],
         ];
         parent::init();

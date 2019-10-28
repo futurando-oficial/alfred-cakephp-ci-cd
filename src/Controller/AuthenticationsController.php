@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,15 +11,14 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Authentication[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AuthenticationsController extends AppController
-{
+class AuthenticationsController extends AppController {
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Users', 'Services']
         ];
@@ -34,8 +34,7 @@ class AuthenticationsController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $authentication = $this->Authentications->get($id, [
             'contain' => ['Users', 'Services']
         ]);
@@ -48,8 +47,7 @@ class AuthenticationsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $authentication = $this->Authentications->newEntity();
         if ($this->request->is('post')) {
             $authentication = $this->Authentications->patchEntity($authentication, $this->request->getData());
@@ -60,8 +58,10 @@ class AuthenticationsController extends AppController
             }
             $this->Flash->error(__('The authentication could not be saved. Please, try again.'));
         }
+        $this->loadComponent('Bitbucket');
+        $servicesUrl['bitbucket'] = $this->Bitbucket->getUrl();
         $services = $this->Authentications->Services->find(null, ['limit' => 200]);
-        $this->set(compact('authentication', 'users', 'services'));
+        $this->set(compact('authentication', 'services', 'servicesUrl'));
     }
 
     /**
@@ -71,8 +71,7 @@ class AuthenticationsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $authentication = $this->Authentications->get($id, [
             'contain' => []
         ]);
@@ -97,8 +96,7 @@ class AuthenticationsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $authentication = $this->Authentications->get($id);
         if ($this->Authentications->delete($authentication)) {
@@ -109,4 +107,31 @@ class AuthenticationsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function bitbucket($param = null) {
+        if (!empty($this->request->getQuery())) {
+            if ($this->request->getQuery('error')) {
+                $this->Flash->error(__('Bitbucket said : ' . $this->request->getQuery('error_description')));
+                return $this->redirect(['action' => 'index']);
+            }
+            $auth = $this->Authentications->newEntity();
+            $auth->user_id = $this->Auth->user('id');
+            $service = $this->Authentications->Services->find()->where(['module' => 'bitbucket'])->first();
+            $auth->service_id = $service->id;
+            $auth->token = $this->request->getQuery('access_token');
+            $auth->status = 1;
+            $auth->expiration = new \DateTime('+' . $this->request->getQuery('expires_in') . ' seconds');
+            $this->Authentications->save($auth);
+            return $this->redirect(['action' => 'index']);
+        }
+    }
+
+    public function gitlab($param) {
+        
+    }
+
+    public function github($param) {
+        
+    }
+
 }
