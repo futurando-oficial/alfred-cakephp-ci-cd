@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property &\Cake\ORM\Association\BelongsToMany $Projects
+ * @property &\Cake\ORM\Association\HasMany $Authentications
+ * @property \App\Model\Table\ProjectsTable&\Cake\ORM\Association\BelongsToMany $Projects
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -40,6 +41,9 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Authentications', [
+            'foreignKey' => 'user_id'
+        ]);
         $this->belongsToMany('Projects', [
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'project_id',

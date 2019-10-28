@@ -11,19 +11,18 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Project[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class ProjectsController extends AppController
-{
+class ProjectsController extends AppController {
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $this->loadModel('ProjectsUsers');
-        $projectsuser =  $this->ProjectsUsers->find('list')->where(['user_id'=>$this->Auth->user('id')])->toArray();
-       
-        $projects = $this->paginate( $this->Projects->find()->where(['id IN'=>$projectsuser]));
+        $projectsuser = $this->ProjectsUsers->find('list')->where(['user_id' => $this->Auth->user('id')])->toArray();
+
+        $projects = $this->paginate($this->Projects->find()->where(['id IN' => $projectsuser]));
 
         $this->set(compact('projects'));
     }
@@ -35,8 +34,7 @@ class ProjectsController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $project = $this->Projects->get($id, [
             'contain' => ['Users']
         ]);
@@ -49,8 +47,7 @@ class ProjectsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
             $post = $this->request->getData();
@@ -72,6 +69,26 @@ class ProjectsController extends AppController
         $this->set(compact('project', 'users'));
     }
 
+    public function sources() {
+
+        $this->loadModel('Users');
+        $user = $this->Users->get($this->Auth->user('id'), ['contain' => ['Authentications.Services']]);
+
+        $this->set(compact('user'));
+    }
+
+    public function repositories($auth_id) {
+        $this->loadModel('Authentications');
+        $auth = $this->Authentications->get($auth_id, ['contain' => 'Services']);
+        $module = ucfirst($auth->service->module);
+
+        $this->loadComponent($module);
+        $repositories = $this->{$module}->getRepositories($auth->token);
+
+        debug($repositories);
+        exit;
+    }
+
     /**
      * Edit method
      *
@@ -79,8 +96,7 @@ class ProjectsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $project = $this->Projects->get($id, [
             'contain' => ['Users']
         ]);
@@ -104,8 +120,7 @@ class ProjectsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $project = $this->Projects->get($id);
         if ($this->Projects->delete($project)) {
@@ -116,4 +131,5 @@ class ProjectsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
