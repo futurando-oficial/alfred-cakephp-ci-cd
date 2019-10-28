@@ -1,7 +1,7 @@
 {
-  "name": "hub-marquise",
+  "name": "alfred-cicd",
   "version": "0.0.1",
-  "description": "hub-marquise",
+  "description": "alfred-cicd",
   "scripts": {
     "start": "gulp watch",
     "build": "gulp compile-scss"
